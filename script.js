@@ -26,7 +26,7 @@ optionImages.forEach((image, index) => {
     gameContainer.classList.add('start');
 
     // Set a timeout to delay the result calculation
-    setTimeout(() => {
+    const time = setTimeout(() => {
       gameContainer.classList.remove('start');
 
       // Get the source of the clicked option image
@@ -65,5 +65,6 @@ optionImages.forEach((image, index) => {
       // Display the result
       result.textContent = userValue === cpuValue ? 'Match Draw' : `${outComeValue} Won!!`;
     }, 2500);
+    time();
   });
 });
