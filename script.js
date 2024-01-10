@@ -5,6 +5,8 @@ const cpuResult = document.querySelector('.cpu_result img');
 const result = document.querySelector('.result');
 const optionImages = document.querySelectorAll('.option_image');
 
+let languageIsSwedish = false;
+
 // Loop through each option image element
 optionImages.forEach((image, index) => {
   image.addEventListener('click', (e) => {
@@ -13,6 +15,9 @@ optionImages.forEach((image, index) => {
     userResult.src = 'img/rock.png';
     cpuResult.src = 'img/rock.png';
     result.textContent = 'Wait...';
+    if (languageIsSwedish) {
+      result.textContent = 'Vänta snällaaaa...';
+    }
 
     // Loop through each option image again
     optionImages.forEach((image2, index2) => {
@@ -47,7 +52,7 @@ optionImages.forEach((image, index) => {
       const userValue = ['R', 'P', 'S'][index];
 
       // Create an object with all possible outcomes
-      const outcomes = {
+      let outcomes = {
         RR: 'Draw',
         RP: 'Cpu',
         RS: 'User',
@@ -58,13 +63,56 @@ optionImages.forEach((image, index) => {
         SR: 'Cpu',
         SP: 'User',
       };
-
+      if (languageIsSwedish) {
+        outcomes = {
+          RR: 'Oavgjort',
+          RP: 'Datorn',
+          RS: 'Du',
+          PP: 'Oavgjort',
+          PR: 'Du',
+          PS: 'Datorn',
+          SS: 'Oavgjort',
+          SR: 'Datorn',
+          SP: 'Du',
+        };
+      }
       // Look up the outcome value based on user and CPU options
       const outComeValue = outcomes[userValue + cpuValue];
 
       // Display the result
       result.textContent = userValue === cpuValue ? 'Match Draw' : `${outComeValue} Won!!`;
+      if (languageIsSwedish) {
+        result.textContent = userValue === cpuValue ? 'Oavgjort' : `${outComeValue} Vann!!`;
+      }
     }, 2500);
     time();
   });
+});
+
+const langRock = document.getElementById('rock');
+const langPaper = document.getElementById('paper');
+const langScissors = document.getElementById('scissors');
+const svFlag = document.getElementById('swedish');
+const engFlag = document.getElementById('english');
+const funH2 = document.getElementById('funH2');
+const playTitle = document.getElementById('playTitle');
+
+engFlag.addEventListener('click', () => {
+  languageIsSwedish = false;
+  langPaper.innerHTML = 'Paper';
+  langRock.innerHTML = 'Rock';
+  langScissors.innerHTML = 'Scissors';
+  result.innerHTML = "Let's Play!!";
+  funH2.innerHTML = 'SOOOO MUCH FUN';
+  playTitle.innerHTML = 'Rock Paper Scissors';
+});
+
+svFlag.addEventListener('click', () => {
+  languageIsSwedish = true;
+  langPaper.innerHTML = 'Påse';
+  langRock.innerHTML = 'Sten';
+  langScissors.innerHTML = 'Sax';
+  result.innerHTML = 'Nu kör vi!!';
+  funH2.innerHTML = 'Åhh vad roligt!';
+  playTitle.innerHTML = 'Sten Sax Påse';
 });
